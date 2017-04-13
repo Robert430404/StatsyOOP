@@ -8,8 +8,8 @@
 
 
 $files = [
-    'src/statsy',
-    'src/memory'
+    'statsy',
+    'memory'
 ];
 
 foreach($files as $file){

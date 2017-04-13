@@ -1,7 +1,7 @@
 <?php
 
 //Include file where all class includes are
-include 'autoload.php';
+include 'src/autoload.php';
 //Set namespace
 use Statsy\memory;
 //Set the var $disk to create a new memory object
