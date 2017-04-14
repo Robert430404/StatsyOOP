@@ -31,11 +31,11 @@ class memory extends statsy
 
     function __construct()
     {
-        $this->ReadMemoryFile();
+        $this->readMemoryFile();
     }
 
 
-    protected function ReadMemoryFile()
+    private function readMemoryFile()
     {
         $memoryValues = file($this::FILE);
 

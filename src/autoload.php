@@ -9,7 +9,8 @@
 
 $files = [
     'statsy',
-    'memory'
+    'memory',
+    'disk'
 ];
 
 foreach($files as $file){
