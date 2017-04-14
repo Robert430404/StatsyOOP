@@ -1,7 +1,3 @@
-<p align="center">
-  <img src ="https://tomrouse.me/images/Statsy_cropped.svg" width="350px" />
-</p>
-
 # Statsy OOP
 
-OOP rebuild of statsy
+OOP rebuild of statsy not ready for use
