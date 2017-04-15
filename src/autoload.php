@@ -10,7 +10,9 @@
 $files = [
     'statsy',
     'memory',
-    'disk'
+    'disk',
+    'cpu',
+    'uptime'
 ];
 
 foreach($files as $file){

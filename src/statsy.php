@@ -51,4 +51,9 @@ abstract class statsy
         }
     }
 
+    public static function ip()
+    {
+        return $_SERVER['SERVER_ADDR'];
+    }
+
 }

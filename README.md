@@ -4,4 +4,6 @@
 
 # Statsy OOP
 
+## NOT READY FOR USE
+
 OOP rebuild of statsy

@@ -29,19 +29,41 @@ class disk extends statsy
     private function getDiskInfo()
     {
 
-        $this->total = disk_total_space("/");
-//        $this->free = disk_free_space($this::DISK);
-//        $this->used = $this->total - $this->free;
-//        $this->usedpercent = statsy::round_up($this->used / $this->total * 100, 2);
+        $this->total = disk_total_space($this::DISK) / 1024;
+        $this->free = disk_free_space($this::DISK) / 1024;
+        $this->used = $this->total - $this->free;
+        $this->usedpercent = statsy::round_up($this->used / $this->total * 100, 1);
 
     }
 
 
-    public function total($memoryValue)
+    public function total($memoryValue = '')
     {
         $total_kb = $this->total;
 
         return statsy::returnCalculator($total_kb, $memoryValue);
+    }
+
+
+    public function free($memoryValue = '')
+    {
+        $free_kb = $this->free;
+
+        return statsy::returnCalculator($free_kb, $memoryValue);
+    }
+
+
+    public function used($memoryValue = '')
+    {
+        $used_kb = $this->used;
+
+        return statsy::returnCalculator($used_kb, $memoryValue);
+    }
+
+
+    public function usedpercent()
+    {
+        return $this->usedpercent;
     }
 
 
