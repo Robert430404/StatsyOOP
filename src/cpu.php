@@ -18,10 +18,12 @@ class cpu extends statsy
     private $cores;
     private $clockSpeed;
     private $cache;
+    private $load;
 
     function __construct()
     {
         $this->readCpuFile();
+        $this->getCpuLoad();
     }
 
 
@@ -33,6 +35,12 @@ class cpu extends statsy
         $this->cores = strtr ($cpuFile[12], array ('cpu cores	: ' => ''));
         $this->clockSpeed = statsy::round_up(strtr ($cpuFile[7], array ('cpu MHz		: ' => '')),2);
         $this->cache = strtr ($cpuFile[8], array ('cache size	: ' => ''));
+    }
+
+
+    private function getCpuLoad()
+    {
+        $this->load = sys_getloadavg()[1];
     }
 
 
@@ -62,7 +70,7 @@ class cpu extends statsy
 
     public function load()
     {
-        return sys_getloadavg()[1];
+        return $this->load;
     }
 
 }

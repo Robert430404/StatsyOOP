@@ -12,17 +12,17 @@ include 'src/autoload.php';
 use Statsy\memory;
 use Statsy\disk;
 use Statsy\cpu;
+use Statsy\uptime;
 //Set the var $disk to create a new memory object
 $memory = new memory();
 $disk = new disk();
 $cpu = new cpu();
+$uptime = new uptime();
 
-echo 'Load';
+echo $uptime->days();
 echo '<br>';
-echo $cpu->load();
-
+echo $uptime->hours();
 echo '<br>';
-echo 'UsedMem';
+echo $uptime->mins();
 echo '<br>';
-echo $memory->usedpercent();
-
+echo $uptime->secs();
