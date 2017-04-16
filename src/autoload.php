@@ -8,13 +8,14 @@
 
 
 $files = [
-    'statsy',
-    'memory',
-    'disk',
-    'cpu',
-    'uptime'
+    'StatsyBase',
+    'Memory',
+    'Disk',
+    'Cpu',
+    'Uptime'
 ];
 
 foreach($files as $file){
     require_once($file . '.php');
 }
+

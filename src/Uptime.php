@@ -9,7 +9,7 @@
 namespace Statsy;
 
 
-class uptime extends statsy
+class Uptime extends StatsyBase
 {
 
     const FILE = '/proc/uptime';
@@ -58,7 +58,7 @@ class uptime extends statsy
 
     public function secs()
     {
-        return $this->days . "&nbsp" . "Days" . "&nbsp" . $this->hours . "&nbsp" . "Hours" . "&nbsp" . $this->mins . "&nbsp" . "Mins" . "&nbsp" . statsy::round_up($this->secs, 0) . "&nbsp" . "Secs" . "&nbsp";
+        return $this->days . "&nbsp" . "Days" . "&nbsp" . $this->hours . "&nbsp" . "Hours" . "&nbsp" . $this->mins . "&nbsp" . "Mins" . "&nbsp" . StatsyBase::round_up($this->secs, 0) . "&nbsp" . "Secs" . "&nbsp";
     }
 
 

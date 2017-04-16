@@ -9,7 +9,7 @@
 namespace Statsy;
 
 
-abstract class statsy
+abstract class StatsyBase
 {
 
     protected static function round_up ( $value, $precision )
@@ -23,11 +23,11 @@ abstract class statsy
     {
         if ($conversion == 'mb') {
             $converted = $input / 1024;
-            return statsy::round_up($converted, 2);
+            return StatsyBase::round_up($converted, 2);
         }
         else if ($conversion == 'gb') {
             $converted = $input / 1024 / 1024;
-            return statsy::round_up($converted, 2);
+            return StatsyBase::round_up($converted, 2);
         }
     }
 
@@ -43,39 +43,17 @@ abstract class statsy
         }
 
         else if ($memoryValue == 'mb') {
-            return statsy::convert($dataValue, 'mb');
+            return StatsyBase::convert($dataValue, 'mb');
         }
 
         else if ($memoryValue == 'gb') {
-            return statsy::convert($dataValue, 'gb');
+            return StatsyBase::convert($dataValue, 'gb');
         }
     }
 
     public static function ip()
     {
         return $_SERVER['SERVER_ADDR'];
-    }
-
-    public static function data()
-    {
-        $memory = new memory();
-        $disk = new disk();
-
-        $mem = array(
-            'total' => $memory->total(),
-            'used' => $memory->used(),
-        );
-
-        $disk = array(
-            'total' => $disk->total(),
-        );
-
-        $array = array(
-            'mem' => $mem,
-            'disk' => $disk
-        );
-
-        return $array;
     }
 
 }

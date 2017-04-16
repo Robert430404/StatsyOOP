@@ -10,7 +10,7 @@
 namespace Statsy;
 
 
-class memory extends statsy
+class Memory extends StatsyBase
 {
 
     const FILE = '/proc/meminfo';
@@ -25,8 +25,8 @@ class memory extends statsy
     private $sreclaimable;
     private $sunreclaim;
     private $used;
-    private $usedpercent;
-    private $realfree;
+    private $usedPercent;
+    private $realFree;
 
 
     function __construct()
@@ -43,18 +43,18 @@ class memory extends statsy
             $memory_item = preg_replace('/\D/', '', $memory_item);
         }
 
-        $this->total = $memoryValues[0];
-        $this->free = $memoryValues[1];
-        $this->available = $memoryValues[2];
-        $this->buffer = $memoryValues[3];
-        $this->cached = $memoryValues[4];
-        $this->swap = $memoryValues[14];
-        $this->shmem = $memoryValues[20];
-        $this->sreclaimable = $memoryValues[22];
-        $this->sunreclaim = $memoryValues[23];
+        $this->total = (double)$memoryValues[0];
+        $this->free = (double)$memoryValues[1];
+        $this->available = (double)$memoryValues[2];
+        $this->buffer = (double)$memoryValues[3];
+        $this->cached = (double)$memoryValues[4];
+        $this->swap = (double)$memoryValues[14];
+        $this->shmem = (double)$memoryValues[20];
+        $this->sreclaimable = (double)$memoryValues[22];
+        $this->sunreclaim = (double)$memoryValues[23];
         $this->used = $this->total - $this->free - $this->buffer - $this->cached - $this->sreclaimable + $this->shmem;
-        $this->usedpercent = statsy::round_up($this->used / $this->total * 100, 2);
-        $this->realfree = $this->total - $this->used;
+        $this->usedPercent = StatsyBase::round_up($this->used / $this->total * 100, 2);
+        $this->realFree = $this->total - $this->used;
     }
 
 
@@ -62,7 +62,7 @@ class memory extends statsy
     {
         $total_kb = $this->total;
 
-        return statsy::returnCalculator($total_kb, $memoryValue);
+        return StatsyBase::returnCalculator($total_kb, $memoryValue);
     }
 
 
@@ -70,7 +70,7 @@ class memory extends statsy
     {
         $free_kb = $this->free;
 
-        return statsy::returnCalculator($free_kb, $memoryValue);
+        return StatsyBase::returnCalculator($free_kb, $memoryValue);
     }
 
 
@@ -78,14 +78,14 @@ class memory extends statsy
     {
         $available_kb = $this->available;
 
-        return statsy::returnCalculator($available_kb, $memoryValue);
+        return StatsyBase::returnCalculator($available_kb, $memoryValue);
     }
 
     public function buffer($memoryValue = '')
     {
         $buffer_kb = $this->buffer;
 
-        return statsy::returnCalculator($buffer_kb, $memoryValue);
+        return StatsyBase::returnCalculator($buffer_kb, $memoryValue);
     }
 
 
@@ -93,7 +93,7 @@ class memory extends statsy
     {
         $cached_kb = $this->cached;
 
-        return statsy::returnCalculator($cached_kb, $memoryValue);
+        return StatsyBase::returnCalculator($cached_kb, $memoryValue);
     }
 
 
@@ -101,7 +101,7 @@ class memory extends statsy
     {
         $swap_kb = $this->swap;
 
-        return statsy::returnCalculator($swap_kb, $memoryValue);
+        return StatsyBase::returnCalculator($swap_kb, $memoryValue);
     }
 
 
@@ -109,7 +109,7 @@ class memory extends statsy
     {
         $shmem_kb = $this->shmem;
 
-        return statsy::returnCalculator($shmem_kb, $memoryValue);
+        return StatsyBase::returnCalculator($shmem_kb, $memoryValue);
     }
 
 
@@ -117,7 +117,7 @@ class memory extends statsy
     {
         $sreclaimable_kb = $this->sreclaimable;
 
-        return statsy::returnCalculator($sreclaimable_kb, $memoryValue);
+        return StatsyBase::returnCalculator($sreclaimable_kb, $memoryValue);
     }
 
 
@@ -125,7 +125,7 @@ class memory extends statsy
     {
         $sunreclaim_kb = $this->sunreclaim;
 
-        return statsy::returnCalculator($sunreclaim_kb, $memoryValue);
+        return StatsyBase::returnCalculator($sunreclaim_kb, $memoryValue);
     }
 
 
@@ -133,21 +133,21 @@ class memory extends statsy
     {
         $used_kb = $this->used;
 
-        return statsy::returnCalculator($used_kb, $memoryValue);
+        return StatsyBase::returnCalculator($used_kb, $memoryValue);
     }
 
 
-    public function usedpercent()
+    public function usedPercent()
     {
-          return $this->usedpercent;
+          return $this->usedPercent;
     }
 
 
-    public function realfree($memoryValue = '')
+    public function realFree($memoryValue = '')
     {
-        $realfree_kb = $this->realfree;
+        $realfree_kb = $this->realFree;
 
-        return statsy::returnCalculator($realfree_kb, $memoryValue);
+        return StatsyBase::returnCalculator($realfree_kb, $memoryValue);
     }
 
 

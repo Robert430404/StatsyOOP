@@ -9,7 +9,7 @@
 namespace Statsy;
 
 
-class disk extends statsy
+class Disk extends StatsyBase
 {
 
     const DISK = '/';
@@ -17,7 +17,7 @@ class disk extends statsy
     private $total;
     private $free;
     private $used;
-    private $usedpercent;
+    private $usedPercent;
 
 
     function __construct()
@@ -32,7 +32,7 @@ class disk extends statsy
         $this->total = disk_total_space($this::DISK) / 1024;
         $this->free = disk_free_space($this::DISK) / 1024;
         $this->used = $this->total - $this->free;
-        $this->usedpercent = statsy::round_up($this->used / $this->total * 100, 1);
+        $this->usedPercent = StatsyBase::round_up($this->used / $this->total * 100, 1);
 
     }
 
@@ -41,7 +41,7 @@ class disk extends statsy
     {
         $total_kb = $this->total;
 
-        return statsy::returnCalculator($total_kb, $memoryValue);
+        return StatsyBase::returnCalculator($total_kb, $memoryValue);
     }
 
 
@@ -49,7 +49,7 @@ class disk extends statsy
     {
         $free_kb = $this->free;
 
-        return statsy::returnCalculator($free_kb, $memoryValue);
+        return StatsyBase::returnCalculator($free_kb, $memoryValue);
     }
 
 
@@ -57,13 +57,13 @@ class disk extends statsy
     {
         $used_kb = $this->used;
 
-        return statsy::returnCalculator($used_kb, $memoryValue);
+        return StatsyBase::returnCalculator($used_kb, $memoryValue);
     }
 
 
-    public function usedpercent()
+    public function usedPercent()
     {
-        return $this->usedpercent;
+        return $this->usedPercent;
     }
 
 

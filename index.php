@@ -5,24 +5,28 @@
  *
  */
 
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 //Include file where all class includes are
-include 'src/autoload.php';
-//Set namespace
-use Statsy\memory;
-use Statsy\disk;
-use Statsy\cpu;
-use Statsy\uptime;
-//Set the var $disk to create a new memory object
-$memory = new memory();
-$disk = new disk();
-$cpu = new cpu();
-$uptime = new uptime();
+//include 'src/autoload.php';
+////Set namespace
+//use Statsy\Memory;
+//use Statsy\Disk;
+//use Statsy\Cpu;
+//use Statsy\Uptime;
+//////Set the var $disk to create a new memory object
+//$memory = new Memory();
+//$disk = new Disk();
+//$cpu = new Cpu();
+//$uptime = new Uptime();
 
-echo $uptime->days();
-echo '<br>';
-echo $uptime->hours();
-echo '<br>';
-echo $uptime->mins();
-echo '<br>';
-echo $uptime->secs();
+include 'src/Statsy.php';
+
+//use Statsy\Statsy;
+//
+//$statsy = new Statsy();
+
+
+echo $statsy->totalMem('gb');
+

@@ -9,7 +9,7 @@
 namespace Statsy;
 
 
-class cpu extends statsy
+class Cpu extends StatsyBase
 {
 
     const FILE = '/proc/cpuinfo';
@@ -33,7 +33,7 @@ class cpu extends statsy
 
         $this->model = strtr ($cpuFile[4], array ('model name	: ' => ''));
         $this->cores = strtr ($cpuFile[12], array ('cpu cores	: ' => ''));
-        $this->clockSpeed = statsy::round_up(strtr ($cpuFile[7], array ('cpu MHz		: ' => '')),2);
+        $this->clockSpeed = StatsyBase::round_up(strtr ($cpuFile[7], array ('cpu MHz		: ' => '')),2);
         $this->cache = strtr ($cpuFile[8], array ('cache size	: ' => ''));
     }
 
