@@ -14,11 +14,6 @@ include 'autoload.php';
 class statsyArray
 {
 
-    function __construct()
-    {
-        $this->data();
-    }
-
 
     public function data()
     {
