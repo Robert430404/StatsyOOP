@@ -56,4 +56,26 @@ abstract class statsy
         return $_SERVER['SERVER_ADDR'];
     }
 
+    public static function data()
+    {
+        $memory = new memory();
+        $disk = new disk();
+
+        $mem = array(
+            'total' => $memory->total(),
+            'used' => $memory->used(),
+        );
+
+        $disk = array(
+            'total' => $disk->total(),
+        );
+
+        $array = array(
+            'mem' => $mem,
+            'disk' => $disk
+        );
+
+        return $array;
+    }
+
 }
