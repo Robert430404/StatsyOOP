@@ -1,0 +1,13 @@
+{
+    "name": "tmx157/statsy-oop",
+    "description": "This is a server statistics tool",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Statsy\\":"src/Statsy/",
+            "Statsy\\Tests\\":"tests/Statsy/"
+        }
+    }
+}

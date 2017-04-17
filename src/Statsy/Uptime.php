@@ -51,7 +51,7 @@ class Uptime extends StatsyBase
     public function __construct($uptimeFile)
     {
         $this->uptimeFile = $uptimeFile;
-        $this->handle     = fopen($this->uptimeFile, 'r');
+        $this->handle     = file_exists($this->uptimeFile) ? fopen($this->uptimeFile, 'r') : false;
     }
 
     /**
@@ -142,6 +142,8 @@ class Uptime extends StatsyBase
      */
     public function __destruct()
     {
-        fclose($this->handle);
+        if (file_exists($this->uptimeFile)) {
+            fclose($this->handle);
+        }
     }
 }

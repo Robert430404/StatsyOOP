@@ -2,8 +2,6 @@
 
 namespace Statsy;
 
-include 'autoload.php';
-
 /**
  * Class Statsy
  *
