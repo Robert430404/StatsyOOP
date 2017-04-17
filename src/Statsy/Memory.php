@@ -108,8 +108,6 @@ class Memory
         $memoryString = stream_get_contents($this->handle);
         $memoryInfo   = explode("\n", $memoryString);
 
-        var_dump($memoryInfo);
-
         foreach ($memoryInfo as &$memoryItem) {
             $memoryItem = (double)preg_replace('/\D/', '', $memoryItem);
         }

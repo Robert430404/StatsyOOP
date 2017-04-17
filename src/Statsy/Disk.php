@@ -1,85 +1,101 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tomrouse
- * Date: 13/04/2017
- * Time: 13:32
- */
 
 namespace Statsy;
 
+use Statsy\Contracts\ByteCalculator;
 
+/**
+ * Class Disk
+ *
+ * @package Statsy
+ */
 class Disk extends StatsyBase
 {
+    /**
+     * @var string
+     */
+    private $driveRoot;
 
-    const DISK = '/';
+    /**
+     * @var ByteCalculator
+     */
+    private $calculator;
 
+    /**
+     * @var float|int
+     */
     private $total;
+
+    /**
+     * @var float|int
+     */
     private $free;
+
+    /**
+     * @var float|int
+     */
     private $used;
+
+    /**
+     * @var float|int
+     */
     private $usedPercent;
 
-
-    private function getTotalDisk()
+    /**
+     * Disk constructor.
+     *
+     * @param $driveRoot
+     */
+    public function __construct($driveRoot, ByteCalculator $byteCalculator)
     {
-        $this->total = disk_total_space(self::DISK) / 1024;
-    }
-
-
-    private function getFreeDisk()
-    {
-        $this->free = disk_free_space(self::DISK) / 1024;
-    }
-
-
-    private function getUsedDisk()
-    {
-        $this->getTotalDisk();
-        $this->getFreeDisk();
-
-        $this->used = $this->total - $this->free;
-    }
-
-
-    private function getUsedPercentDisk()
-    {
-        $this->getTotalDisk();
-        $this->getUsedDisk();
-
+        $this->driveRoot   = $driveRoot;
+        $this->calculator  = $byteCalculator;
+        $this->total       = disk_total_space($this->driveRoot) / 1024;
+        $this->free        = disk_free_space($this->driveRoot) / 1024;
+        $this->used        = $this->total - $this->free;
         $this->usedPercent = $this->round_up($this->used / $this->total * 100, 1);
     }
 
-
+    /**
+     * Returns the total disk space
+     *
+     * @param string $memoryValue
+     * @return mixed
+     */
     public function total($memoryValue = '')
     {
-        $this->getTotalDisk();
-
-        return $this->returnCalculator($this->total, $memoryValue);
+        return $this->calculator->calculate($this->total, $memoryValue);
     }
 
-
+    /**
+     * Returns the free disk space
+     *
+     * @param string $memoryValue
+     * @return mixed
+     */
     public function free($memoryValue = '')
     {
-        $this->getFreeDisk();
-
-        return $this->returnCalculator($this->free, $memoryValue);
+        return $this->calculator->calculate($this->free, $memoryValue);
     }
 
-
+    /**
+     * Returns the used disk space
+     *
+     * @param string $memoryValue
+     * @return mixed
+     */
     public function used($memoryValue = '')
     {
-        $this->getUsedDisk();
-
-        return $this->returnCalculator($this->used, $memoryValue);
+        return $this->calculator->calculate($this->used, $memoryValue);
     }
 
-
+    /**
+     * Returns the unused disk space in a percentage
+     *
+     * @return float|int
+     */
     public function usedPercent()
     {
-        $this->getUsedPercentDisk();
-
         return $this->usedPercent;
     }
-
-
 }
