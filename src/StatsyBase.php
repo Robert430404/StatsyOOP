@@ -8,17 +8,31 @@
 
 namespace Statsy;
 
-
+/**
+ * Class StatsyBase
+ *
+ * @package Statsy
+ */
 abstract class StatsyBase
 {
-
+    /**
+     * Performs a round on the seconds
+     *
+     * @param $value
+     * @param $precision
+     * @return float|int
+     */
     protected function round_up ( $value, $precision )
     {
         $pow = pow ( 10, $precision );
         return ( ceil ( $pow * $value ) + ceil ( $pow * $value - ceil ( $pow * $value ) ) ) / $pow;
     }
 
-
+    /**
+     * @param $input
+     * @param $conversion
+     * @return float|int
+     */
     protected function convert($input, $conversion)
     {
         if ($conversion == 'mb') {
@@ -31,7 +45,11 @@ abstract class StatsyBase
         }
     }
 
-
+    /**
+     * @param $dataValue
+     * @param $memoryValue
+     * @return float|int
+     */
     protected function returnCalculator($dataValue, $memoryValue)
     {
         if ($memoryValue == '') {
@@ -51,6 +69,9 @@ abstract class StatsyBase
         }
     }
 
+    /**
+     * @return mixed
+     */
     public static function ip()
     {
         return $_SERVER['SERVER_ADDR'];

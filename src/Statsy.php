@@ -1,25 +1,44 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tomrouse
- * Date: 16/04/2017
- * Time: 16:06
- */
 
 namespace Statsy;
 
 include 'autoload.php';
 
-
+/**
+ * Class Statsy
+ *
+ * @package Statsy
+ */
 class Statsy
 {
-
+    /**
+     * @var Memory
+     */
     protected $memory;
+
+    /**
+     * @var Disk
+     */
     protected $disk;
+
+    /**
+     * @var Cpu
+     */
     protected $cpu;
+
+    /**
+     * @var Uptime
+     */
     protected $uptime;
 
-
+    /**
+     * Statsy constructor.
+     *
+     * @param Memory $memory
+     * @param Cpu $cpu
+     * @param Disk $disk
+     * @param Uptime $uptime
+     */
     public function __construct(Memory $memory, Cpu $cpu, Disk $disk, Uptime $uptime)
     {
         $this->memory = $memory;
@@ -161,25 +180,25 @@ class Statsy
 
     public function uptimeDays()
     {
-        return $this->uptime->days();
+        return $this->uptime->getUptime()->getTimeString();
     }
 
 
     public function uptimeHours()
     {
-        return $this->uptime->hours();
+        return $this->uptime->getUptime()->getTimeString(true, true);
     }
 
 
-    public function uptimeMins()
+    public function uptimeMinutes()
     {
-        return $this->uptime->mins();
+        return $this->uptime->getUptime()->getTimeString(true, true, true);
     }
 
 
-    public function uptimeSecs()
+    public function uptimeSeconds()
     {
-        return $this->uptime->secs();
+        return $this->uptime->getUptime()->getTimeString(true, true, true, true);
     }
 
     //Ip
