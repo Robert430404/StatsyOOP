@@ -85,19 +85,19 @@ class Statsy
 
     public function shMem($memoryValue = '')
     {
-        return $this->memory->shmem($memoryValue);
+        return $this->memory->shMem($memoryValue);
     }
 
 
     public function sreclaimableMem($memoryValue = '')
     {
-        return $this->memory->sreclaimable($memoryValue);
+        return $this->memory->sReclaimable($memoryValue);
     }
 
 
     public function sunreclaimMem($memoryValue = '')
     {
-        return $this->memory->sunreclaim($memoryValue);
+        return $this->memory->sUnreclaim($memoryValue);
     }
 
 
@@ -176,24 +176,41 @@ class Statsy
 
     //Uptime Functions
 
+    /**
+     * Get full time string down to the days
+     *
+     * @return string
+     */
     public function uptimeDays()
     {
         return $this->uptime->getUptime()->getTimeString();
     }
 
-
+    /**
+     * Get full time string down to the hours
+     *
+     * @return string
+     */
     public function uptimeHours()
     {
         return $this->uptime->getUptime()->getTimeString(true, true);
     }
 
-
+    /**
+     * Get full time string down to the minutes
+     *
+     * @return string
+     */
     public function uptimeMinutes()
     {
         return $this->uptime->getUptime()->getTimeString(true, true, true);
     }
 
-
+    /**
+     * Get full time string down to the seconds
+     *
+     * @return string
+     */
     public function uptimeSeconds()
     {
         return $this->uptime->getUptime()->getTimeString(true, true, true, true);

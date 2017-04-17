@@ -1,149 +1,274 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tomrouse
- * Date: 10/04/2017
- * Time: 16:02
- */
-
 
 namespace Statsy;
 
+use Statsy\Contracts\ByteCalculator;
 
-class Memory extends StatsyBase
+/**
+ * Class Memory
+ *
+ * @package Statsy
+ */
+class Memory
 {
+    /**
+     * @var string
+     */
+    private $memoryFile;
 
-    const FILE = '/proc/meminfo';
+    /**
+     * @var Resource
+     */
+    private $handle;
 
+    /**
+     * @var ByteCalculator
+     */
+    private $calculator;
+
+    /**
+     * @var double
+     */
     private $total;
+
+    /**
+     * @var double
+     */
     private $free;
+
+    /**
+     * @var double
+     */
     private $available;
+
+    /**
+     * @var double
+     */
     private $buffer;
+
+    /**
+     * @var double
+     */
     private $cached;
+
+    /**
+     * @var double
+     */
     private $swap;
-    private $shmem;
-    private $sreclaimable;
-    private $sunreclaim;
+
+    /**
+     * @var double
+     */
+    private $shMem;
+
+    /**
+     * @var double
+     */
+    private $sReclaimable;
+
+    /**
+     * @var double
+     */
+    private $sUnreclaim;
+
+    /**
+     * @var double
+     */
     private $used;
+
+    /**
+     * @var double
+     */
     private $usedPercent;
+
+    /**
+     * @var double
+     */
     private $realFree;
 
-
-    private function readMemoryFile()
+    /**
+     * Memory constructor.
+     *
+     * @param $memoryFile
+     */
+    public function __construct($memoryFile, ByteCalculator $memoryCalculator)
     {
-        $memoryValues = file(self::FILE);
+        $this->memoryFile = $memoryFile;
+        $this->handle     = file_exists($this->memoryFile) ? fopen($this->memoryFile, 'r') : 0;
+        $this->calculator = $memoryCalculator;
+    }
 
-        foreach ($memoryValues as &$memory_item) {
-            $memory_item = preg_replace('/\D/', '', $memory_item);
+    /**
+     * Parses the memory file and formats the data
+     *
+     * @return Memory
+     */
+    public function readMemoryFile()
+    {
+        $memoryString = stream_get_contents($this->handle);
+        $memoryInfo   = explode("\n", $memoryString);
+
+        var_dump($memoryInfo);
+
+        foreach ($memoryInfo as &$memoryItem) {
+            $memoryItem = (double)preg_replace('/\D/', '', $memoryItem);
         }
 
-        $this->total = (double)$memoryValues[0];
-        $this->free = (double)$memoryValues[1];
-        $this->available = (double)$memoryValues[2];
-        $this->buffer = (double)$memoryValues[3];
-        $this->cached = (double)$memoryValues[4];
-        $this->swap = (double)$memoryValues[14];
-        $this->shmem = (double)$memoryValues[20];
-        $this->sreclaimable = (double)$memoryValues[22];
-        $this->sunreclaim = (double)$memoryValues[23];
-        $this->used = $this->total - $this->free - $this->buffer - $this->cached - $this->sreclaimable + $this->shmem;
-        $this->usedPercent = $this->round_up($this->used / $this->total * 100, 2);
-        $this->realFree = $this->total - $this->used;
+        $this->total        = $memoryInfo[0];
+        $this->free         = $memoryInfo[1];
+        $this->available    = $memoryInfo[2];
+        $this->buffer       = $memoryInfo[3];
+        $this->cached       = $memoryInfo[4];
+        $this->swap         = $memoryInfo[14];
+        $this->shMem        = $memoryInfo[20];
+        $this->sReclaimable = $memoryInfo[22];
+        $this->sUnreclaim   = $memoryInfo[23];
+        $this->used         = $this->total - $this->free - $this->buffer - $this->cached - $this->sReclaimable + $this->shMem;
+        $this->usedPercent  = $this->calculator->roundUp($this->used / $this->total * 100, 2);
+        $this->realFree     = $this->total - $this->used;
+
+        return $this;
     }
 
-
+    /**
+     * Returns the total memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function total($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->total, $memoryValue);
+        return $this->calculator->calculate($this->total, $memoryValue);
     }
 
-
+    /**
+     * Returns the free memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function free($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->free, $memoryValue);
+        return $this->calculator->calculate($this->free, $memoryValue);
     }
 
-
+    /**
+     * Returns the available memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function available($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->available, $memoryValue);
+        return $this->calculator->calculate($this->available, $memoryValue);
     }
 
+    /**
+     * Returns the memory buffer for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function buffer($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->buffer, $memoryValue);
+        return $this->calculator->calculate($this->buffer, $memoryValue);
     }
 
-
+    /**
+     * Returns the cached memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function cached($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->cached, $memoryValue);
+        return $this->calculator->calculate($this->cached, $memoryValue);
     }
 
-
+    /**
+     * Returns the swap in use by the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function swap($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->swap, $memoryValue);
+        return $this->calculator->calculate($this->swap, $memoryValue);
     }
 
-
-    public function shmem($memoryValue = '')
+    /**
+     * Returns the shared memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
+    public function shMem($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->shmem, $memoryValue);
+        return $this->calculator->calculate($this->shMem, $memoryValue);
     }
 
-
-    public function sreclaimable($memoryValue = '')
+    /**
+     * Shows the shared reclaimable memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
+    public function sReclaimable($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->sreclaimable, $memoryValue);
+        return $this->calculator->calculate($this->sReclaimable, $memoryValue);
     }
 
-
-    public function sunreclaim($memoryValue = '')
+    /**
+     * Shows the shared unreclaimable memory for the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
+    public function sUnreclaim($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->sunreclaim, $memoryValue);
+        return $this->calculator->calculate($this->sUnreclaim, $memoryValue);
     }
 
-
+    /**
+     * Shows the used memory in the system
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function used($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->used, $memoryValue);
+        return $this->calculator->calculate($this->used, $memoryValue);
     }
 
-
+    /**
+     * Shows the "real" free memory
+     *
+     * @param string $memoryValue
+     * @return float|int
+     */
     public function realFree($memoryValue = '')
     {
-        $this->readMemoryFile();
-
-        return $this->returnCalculator($this->realFree, $memoryValue);
+        return $this->calculator->calculate($this->realFree, $memoryValue);
     }
 
-
+    /**
+     * Returns a percentage representation of the memory used
+     *
+     * @return float
+     */
     public function usedPercent()
     {
           return $this->usedPercent;
     }
 
-
+    /**
+     * Closes the file handler for memory
+     */
+    public function __destruct()
+    {
+        if (file_exists($this->memoryFile)) {
+            fclose($this->handle);
+        }
+    }
 }
 

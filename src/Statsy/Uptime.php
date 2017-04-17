@@ -2,6 +2,8 @@
 
 namespace Statsy;
 
+use Statsy\Contracts\Calculator;
+
 /**
  * Class Uptime
  *
@@ -11,8 +13,23 @@ namespace Statsy;
  *
  * @package Statsy
  */
-class Uptime extends StatsyBase
+class Uptime
 {
+    /**
+     * @var string
+     */
+    private $uptimeFile;
+
+    /**
+     * @var Resource
+     */
+    private $handle;
+
+    /**
+     * @var Calculator
+     */
+    private $calculator;
+
     /**
      * @var int
      */
@@ -34,24 +51,15 @@ class Uptime extends StatsyBase
     private $seconds;
 
     /**
-     * @var string
-     */
-    private $uptimeFile;
-
-    /**
-     * @var Resource
-     */
-    private $handle;
-
-    /**
      * Uptime constructor.
      *
      * @param $uptimeFile
      */
-    public function __construct($uptimeFile)
+    public function __construct($uptimeFile, Calculator $calculator)
     {
         $this->uptimeFile = $uptimeFile;
         $this->handle     = file_exists($this->uptimeFile) ? fopen($this->uptimeFile, 'r') : false;
+        $this->calculator = $calculator;
     }
 
     /**
@@ -134,7 +142,7 @@ class Uptime extends StatsyBase
      */
     private function seconds()
     {
-        return StatsyBase::round_up($this->seconds, 0) . "&nbsp;" . "Secs" . "&nbsp;";
+        return $this->calculator->roundUp($this->seconds, 0) . "&nbsp;" . "Secs" . "&nbsp;";
     }
 
     /**
