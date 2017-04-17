@@ -10,165 +10,160 @@ namespace Statsy;
 
 include 'autoload.php';
 
+use Statsy\Disk;
+
 
 class Statsy
 {
+
+    protected $memory;
+    protected $disk;
+    protected $cpu;
+    protected $uptime;
+
+
+    public function __construct(Memory $memory, Cpu $cpu, Disk $disk, Uptime $uptime)
+    {
+        $this->memory = $memory;
+        $this->disk = $disk;
+        $this->cpu = $cpu;
+        $this->uptime = $uptime;
+    }
+
     //Memory Functions
 
     public function totalMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->total($memoryValue);
+        return $this->memory->total($memoryValue);
     }
 
 
     public function freeMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->free($memoryValue);
+        return $this->memory->free($memoryValue);
     }
 
 
     public function availableMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->available($memoryValue);
+        return $this->memory->available($memoryValue);
     }
 
 
     public function bufferMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->buffer($memoryValue);
+        return $this->memory->buffer($memoryValue);
     }
 
 
     public function cachedMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->cached($memoryValue);
+        return $this->memory->cached($memoryValue);
     }
 
 
     public function swapMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->swap($memoryValue);
+        return $this->memory->swap($memoryValue);
     }
 
 
     public function shMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->shmem($memoryValue);
+        return $this->memory->shmem($memoryValue);
     }
 
 
     public function sreclaimableMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->sreclaimable($memoryValue);
+        return $this->memory->sreclaimable($memoryValue);
     }
 
 
     public function sunreclaimMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->sunreclaim($memoryValue);
+        return $this->memory->sunreclaim($memoryValue);
     }
 
 
     public function usedMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->used($memoryValue);
-    }
-
-
-    public function usedMemPercent()
-    {
-        $memory = new Memory();
-        return $memory->usedPercent();
+        return $this->memory->used($memoryValue);
     }
 
 
     public function realFreeMem($memoryValue = '')
     {
-        $memory = new Memory();
-        return $memory->realFree($memoryValue);
+        return $this->memory->realFree($memoryValue);
+    }
+
+
+    public function usedMemPercent()
+    {
+        return $this->memory->usedPercent();
     }
 
     //Disk Functions
 
     public function totalDisk($memoryValue = '')
     {
-        $disk = new Disk();
-        return $disk->total($memoryValue);
+        return $this->disk->total($memoryValue);
     }
 
 
     public function freeDisk($memoryValue = '')
     {
-        $disk = new Disk();
-        return $disk->free($memoryValue);
+        return $this->disk->free($memoryValue);
     }
 
 
     public function usedDisk($memoryValue = '')
     {
-        $disk = new Disk();
-        return $disk->used($memoryValue);
+        return $this->disk->used($memoryValue);
     }
 
 
     public function usedDiskPercent()
     {
-        $disk = new Disk();
-        return $disk->usedPercent();
+        return $this->disk->usedPercent();
     }
 
     //CPU Functions
 
     public function cpuModel()
     {
-        $cpu = new Cpu();
-        return $cpu->model();
+        return $this->cpu->model();
     }
 
 
     public function cpuCores()
     {
-        $cpu = new Cpu();
-        return $cpu->cores();
+        return $this->cpu->cores();
     }
 
 
     public function cpuClockSpeed()
     {
-        $cpu = new Cpu();
-        return $cpu->clockSpeed();
+        return $this->cpu->clockSpeed();
     }
 
 
     public function cpuCache()
     {
-        $cpu = new Cpu();
-        return $cpu->cache();
+        return $this->cpu->cache();
     }
 
 
     public function cpuLoad()
     {
-        $cpu = new Cpu();
-        return $cpu->load();
+        return $this->cpu->load();
     }
 
     //Uptime Functions
 
     public function uptimeDays()
     {
-        $uptime = new Uptime();
-        return $uptime->days();
+        return $this->uptime->days();
     }
 
 
@@ -202,5 +197,3 @@ class Statsy
 
 
 }
-
-$statsy = new Statsy();

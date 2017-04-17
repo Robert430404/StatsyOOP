@@ -12,27 +12,27 @@ namespace Statsy;
 abstract class StatsyBase
 {
 
-    protected static function round_up ( $value, $precision )
+    protected function round_up ( $value, $precision )
     {
         $pow = pow ( 10, $precision );
         return ( ceil ( $pow * $value ) + ceil ( $pow * $value - ceil ( $pow * $value ) ) ) / $pow;
     }
 
 
-    protected static function convert($input, $conversion)
+    protected function convert($input, $conversion)
     {
         if ($conversion == 'mb') {
             $converted = $input / 1024;
-            return StatsyBase::round_up($converted, 2);
+            return $this->round_up($converted, 2);
         }
         else if ($conversion == 'gb') {
             $converted = $input / 1024 / 1024;
-            return StatsyBase::round_up($converted, 2);
+            return $this->round_up($converted, 2);
         }
     }
 
 
-    protected static function returnCalculator($dataValue, $memoryValue)
+    protected function returnCalculator($dataValue, $memoryValue)
     {
         if ($memoryValue == '') {
             return $dataValue;
@@ -43,11 +43,11 @@ abstract class StatsyBase
         }
 
         else if ($memoryValue == 'mb') {
-            return StatsyBase::convert($dataValue, 'mb');
+            return $this->convert($dataValue, 'mb');
         }
 
         else if ($memoryValue == 'gb') {
-            return StatsyBase::convert($dataValue, 'gb');
+            return $this->convert($dataValue, 'gb');
         }
     }
 

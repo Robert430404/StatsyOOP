@@ -20,12 +20,6 @@ class Cpu extends StatsyBase
     private $cache;
     private $load;
 
-    function __construct()
-    {
-        $this->readCpuFile();
-        $this->getCpuLoad();
-    }
-
 
     private function readCpuFile()
     {
@@ -33,7 +27,7 @@ class Cpu extends StatsyBase
 
         $this->model = strtr ($cpuFile[4], array ('model name	: ' => ''));
         $this->cores = strtr ($cpuFile[12], array ('cpu cores	: ' => ''));
-        $this->clockSpeed = StatsyBase::round_up(strtr ($cpuFile[7], array ('cpu MHz		: ' => '')),2);
+        $this->clockSpeed = $this->round_up(strtr ($cpuFile[7], array ('cpu MHz		: ' => '')),2);
         $this->cache = strtr ($cpuFile[8], array ('cache size	: ' => ''));
     }
 
@@ -46,30 +40,40 @@ class Cpu extends StatsyBase
 
     public function model()
     {
+        $this->readCpuFile();
+
         return $this->model;
     }
 
 
     public function cores()
     {
+        $this->readCpuFile();
+
         return $this->cores;
     }
 
 
     public function clockSpeed()
     {
+        $this->readCpuFile();
+
         return $this->clockSpeed;
     }
 
 
     public function cache()
     {
+        $this->readCpuFile();
+
         return $this->cache;
     }
 
 
     public function load()
     {
+        $this->getCpuLoad();
+
         return $this->load;
     }
 

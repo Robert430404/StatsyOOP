@@ -20,49 +20,64 @@ class Disk extends StatsyBase
     private $usedPercent;
 
 
-    function __construct()
+    private function getTotalDisk()
     {
-        $this->getDiskInfo();
+        $this->total = disk_total_space(self::DISK) / 1024;
     }
 
 
-    private function getDiskInfo()
+    private function getFreeDisk()
     {
+        $this->free = disk_free_space(self::DISK) / 1024;
+    }
 
-        $this->total = disk_total_space($this::DISK) / 1024;
-        $this->free = disk_free_space($this::DISK) / 1024;
+
+    private function getUsedDisk()
+    {
+        $this->getTotalDisk();
+        $this->getFreeDisk();
+
         $this->used = $this->total - $this->free;
-        $this->usedPercent = StatsyBase::round_up($this->used / $this->total * 100, 1);
+    }
 
+
+    private function getUsedPercentDisk()
+    {
+        $this->getTotalDisk();
+        $this->getUsedDisk();
+
+        $this->usedPercent = $this->round_up($this->used / $this->total * 100, 1);
     }
 
 
     public function total($memoryValue = '')
     {
-        $total_kb = $this->total;
+        $this->getTotalDisk();
 
-        return StatsyBase::returnCalculator($total_kb, $memoryValue);
+        return $this->returnCalculator($this->total, $memoryValue);
     }
 
 
     public function free($memoryValue = '')
     {
-        $free_kb = $this->free;
+        $this->getFreeDisk();
 
-        return StatsyBase::returnCalculator($free_kb, $memoryValue);
+        return $this->returnCalculator($this->free, $memoryValue);
     }
 
 
     public function used($memoryValue = '')
     {
-        $used_kb = $this->used;
+        $this->getUsedDisk();
 
-        return StatsyBase::returnCalculator($used_kb, $memoryValue);
+        return $this->returnCalculator($this->used, $memoryValue);
     }
 
 
     public function usedPercent()
     {
+        $this->getUsedPercentDisk();
+
         return $this->usedPercent;
     }
 

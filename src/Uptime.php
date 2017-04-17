@@ -20,12 +20,6 @@ class Uptime extends StatsyBase
     private $secs;
 
 
-    function __construct()
-    {
-        $this->getUptime();
-    }
-
-
     private function getUptime()
     {
         $str   = @file_get_contents('/proc/uptime');
@@ -40,24 +34,32 @@ class Uptime extends StatsyBase
 
     public function days()
     {
+        $this->getUptime();
+
         return $this->days . "&nbsp" . "Days" . "&nbsp";
     }
 
 
     public function hours()
     {
+        $this->getUptime();
+
         return $this->days . "&nbsp" . "Days" . "&nbsp" .$this->hours . "&nbsp" . "Hours" . "&nbsp";
     }
 
 
     public function mins()
     {
+        $this->getUptime();
+
         return $this->days . "&nbsp" . "Days" . "&nbsp" . $this->hours . "&nbsp" . "Hours" . "&nbsp" . $this->mins . "&nbsp" . "Mins" . "&nbsp";
     }
 
 
     public function secs()
     {
+        $this->getUptime();
+
         return $this->days . "&nbsp" . "Days" . "&nbsp" . $this->hours . "&nbsp" . "Hours" . "&nbsp" . $this->mins . "&nbsp" . "Mins" . "&nbsp" . StatsyBase::round_up($this->secs, 0) . "&nbsp" . "Secs" . "&nbsp";
     }
 
