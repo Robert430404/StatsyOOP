@@ -10,8 +10,6 @@ namespace Statsy;
 
 include 'autoload.php';
 
-use Statsy\Disk;
-
 
 class Statsy
 {
@@ -169,22 +167,19 @@ class Statsy
 
     public function uptimeHours()
     {
-        $uptime = new Uptime();
-        return $uptime->hours();
+        return $this->uptime->hours();
     }
 
 
     public function uptimeMins()
     {
-        $uptime = new Uptime();
-        return $uptime->mins();
+        return $this->uptime->mins();
     }
 
 
     public function uptimeSecs()
     {
-        $uptime = new Uptime();
-        return $uptime->secs();
+        return $this->uptime->secs();
     }
 
     //Ip

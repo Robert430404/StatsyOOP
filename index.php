@@ -27,4 +27,4 @@ $statsy = new Statsy($memory, $cpu, $disk, $uptime);
 
 
 //now can use
-echo $statsy->totalMem('gb');
+echo $statsy->usedMem();
