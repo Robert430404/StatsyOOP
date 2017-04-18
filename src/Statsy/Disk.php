@@ -53,40 +53,37 @@ class Disk extends StatsyBase
         $this->total       = disk_total_space($this->driveRoot) / 1024;
         $this->free        = disk_free_space($this->driveRoot) / 1024;
         $this->used        = $this->total - $this->free;
-        $this->usedPercent = $this->round_up($this->used / $this->total * 100, 1);
+        $this->usedPercent = $this->calculator->roundUp($this->used / $this->total * 100, 1);
     }
 
     /**
      * Returns the total disk space
      *
-     * @param string $memoryValue
-     * @return mixed
+     * @return ByteCalculator
      */
-    public function total($memoryValue = '')
+    public function total()
     {
-        return $this->calculator->calculate($this->total, $memoryValue);
+        return $this->calculator->calculate($this->total);
     }
 
     /**
      * Returns the free disk space
      *
-     * @param string $memoryValue
-     * @return mixed
+     * @return ByteCalculator
      */
-    public function free($memoryValue = '')
+    public function free()
     {
-        return $this->calculator->calculate($this->free, $memoryValue);
+        return $this->calculator->calculate($this->free);
     }
 
     /**
      * Returns the used disk space
      *
-     * @param string $memoryValue
-     * @return mixed
+     * @return ByteCalculator
      */
-    public function used($memoryValue = '')
+    public function used()
     {
-        return $this->calculator->calculate($this->used, $memoryValue);
+        return $this->calculator->calculate($this->used);
     }
 
     /**

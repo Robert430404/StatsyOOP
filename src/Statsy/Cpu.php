@@ -1,26 +1,39 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tomrouse
- * Date: 14/04/2017
- * Time: 20:32
- */
 
 namespace Statsy;
 
+use Statsy\Contracts\Calculator;
 
+/**
+ * Class Cpu
+ *
+ * @package Statsy
+ */
 class Cpu extends StatsyBase
 {
 
     const FILE = '/proc/cpuinfo';
 
+    private $cpuFile;
+    private $calculator;
     private $model;
     private $cores;
     private $clockSpeed;
     private $cache;
     private $load;
 
+    /**
+     * Cpu constructor.
+     */
+    public function __construct($cpuFile, Calculator $calculator)
+    {
+        $this->cpuFile = $cpuFile;
+        $this->calculator = $calculator;
+    }
 
+    /**
+     *
+     */
     private function readCpuFile()
     {
         $cpuFile = file($this::FILE);

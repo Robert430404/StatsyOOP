@@ -12,20 +12,61 @@ use Statsy\Contracts\ByteCalculator as ByteCalculatorInterface;
 class ByteCalculator extends Calculator implements ByteCalculatorInterface
 {
     /**
+     * @var
+     */
+    private $kb;
+
+    /**
+     * @var
+     */
+    private $mb;
+
+    /**
+     * @var
+     */
+    private $gb;
+
+    /**
      * @param $totalMemory
      * @param $memoryUnit
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function calculate($totalMemory, $memoryUnit)
+    public function calculate($totalMemory)
     {
-        switch ($memoryUnit) {
-            case 'mb' :
-                $totalMemory = $this->convert($totalMemory, $memoryUnit);
-                break;
-            case 'gb' :
-                $totalMemory = $this->convert($totalMemory, $memoryUnit);
-        }
+        $this->kb = $totalMemory;
+        $this->mb = $this->convert($totalMemory, 'mb');
+        $this->gb = $this->convert($totalMemory, 'gb');
 
-        return $totalMemory;
+        return $this;
+    }
+
+    /**
+     * Returns a KiloByte representation of the value
+     *
+     * @return mixed
+     */
+    public function kb()
+    {
+        return $this->kb;
+    }
+
+    /**
+     * Returns a MegaByte representation of the value
+     *
+     * @return mixed
+     */
+    public function mb()
+    {
+        return $this->mb;
+    }
+
+    /**
+     * Returns a GigaByte representation of the value
+     *
+     * @return mixed
+     */
+    public function gb()
+    {
+        return $this->gb;
     }
 }

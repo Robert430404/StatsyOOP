@@ -10,9 +10,30 @@ namespace Statsy\Contracts;
 interface ByteCalculator extends Calculator
 {
     /**
-     * Performs the memory calculation
+     * Calculates the different values for the properties
+     *
+     * @return ByteCalculator
+     */
+    public function calculate($totalMemory);
+
+    /**
+     * Returns a KiloByte representation of the provided value
      *
      * @return mixed
      */
-    public function calculate($totalMemory, $memoryUnit);
+    public function kb();
+
+    /**
+     * Returns a MegaByte representation of the provided value
+     *
+     * @return mixed
+     */
+    public function mb();
+
+    /**
+     * Returns a GigaByte representation of the provided value
+     *
+     * @return mixed
+     */
+    public function gb();
 }

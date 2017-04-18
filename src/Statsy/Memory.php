@@ -132,121 +132,112 @@ class Memory
      * Returns the total memory for the system
      *
      * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function total($memoryValue = '')
+    public function total()
     {
-        return $this->calculator->calculate($this->total, $memoryValue);
+        return $this->calculator->calculate($this->total);
     }
 
     /**
      * Returns the free memory for the system
      *
      * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function free($memoryValue = '')
+    public function free()
     {
-        return $this->calculator->calculate($this->free, $memoryValue);
+        return $this->calculator->calculate($this->free);
     }
 
     /**
      * Returns the available memory for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function available($memoryValue = '')
+    public function available()
     {
-        return $this->calculator->calculate($this->available, $memoryValue);
+        return $this->calculator->calculate($this->available);
     }
 
     /**
      * Returns the memory buffer for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function buffer($memoryValue = '')
+    public function buffer()
     {
-        return $this->calculator->calculate($this->buffer, $memoryValue);
+        return $this->calculator->calculate($this->buffer);
     }
 
     /**
      * Returns the cached memory for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function cached($memoryValue = '')
+    public function cached()
     {
-        return $this->calculator->calculate($this->cached, $memoryValue);
+        return $this->calculator->calculate($this->cached);
     }
 
     /**
      * Returns the swap in use by the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function swap($memoryValue = '')
+    public function swap()
     {
-        return $this->calculator->calculate($this->swap, $memoryValue);
+        return $this->calculator->calculate($this->swap);
     }
 
     /**
      * Returns the shared memory for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function shMem($memoryValue = '')
+    public function shMem()
     {
-        return $this->calculator->calculate($this->shMem, $memoryValue);
+        return $this->calculator->calculate($this->shMem);
     }
 
     /**
      * Shows the shared reclaimable memory for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function sReclaimable($memoryValue = '')
+    public function sReclaimable()
     {
-        return $this->calculator->calculate($this->sReclaimable, $memoryValue);
+        return $this->calculator->calculate($this->sReclaimable);
     }
 
     /**
      * Shows the shared unreclaimable memory for the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function sUnreclaim($memoryValue = '')
+    public function sUnreclaim()
     {
-        return $this->calculator->calculate($this->sUnreclaim, $memoryValue);
+        return $this->calculator->calculate($this->sUnreclaim);
     }
 
     /**
      * Shows the used memory in the system
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function used($memoryValue = '')
+    public function used()
     {
-        return $this->calculator->calculate($this->used, $memoryValue);
+        return $this->calculator->calculate($this->used);
     }
 
     /**
      * Shows the "real" free memory
      *
-     * @param string $memoryValue
-     * @return float|int
+     * @return ByteCalculator
      */
-    public function realFree($memoryValue = '')
+    public function realFree()
     {
-        return $this->calculator->calculate($this->realFree, $memoryValue);
+        return $this->calculator->calculate($this->realFree);
     }
 
     /**
